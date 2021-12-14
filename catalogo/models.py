@@ -6,6 +6,9 @@ class Genero(models.Model):
     """Um modelo que representa o gênero do livro"""
     nome = models.CharField(max_length=200, help_text='Entre com gênero do livro (ex: fantasia).')
     
+    class Meta:
+        verbose_name = 'Gênero'
+    
     def __str__(self):
         """Retorna uma string para representar o modelo"""
         return self.nome
@@ -53,6 +56,7 @@ class LivroInstancia(models.Model):
     
     class Meta:
         ordering = ['devolucao']
+        verbose_name_plural = 'Instâncias de livros'
 
     
     def __str__(self):
@@ -69,6 +73,7 @@ class Autor(models.Model):
     
     class Meta:
         ordering = ['sobrenome', 'nome']
+        verbose_name_plural = 'Autores'
     
     def get_absolute_url(self):
         """Retorna uma url para acesso particular a instância autor"""
