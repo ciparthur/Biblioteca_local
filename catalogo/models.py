@@ -18,13 +18,13 @@ class Livro(models.Model):
     """Um modelo que representa um livro"""
     titulo = models.CharField(max_length=200, help_text='Entre com o título do livro.')
     autor = models.ForeignKey('Autor', on_delete=models.SET_NULL, null=True)
-    sumario = models.TextField(max_length=1000, help_text='Entre com uma breve descrição do livro')
+    sumario = models.TextField('Sumário', max_length=1000, help_text='Entre com uma breve descrição do livro')
     isbn = models.CharField('ISBN', max_length=11, help_text='Número <a href="https://www.isbn-international.org/content/what-isbn">ISBN</a> de 13 caracteres')
-    genero = models.ManyToManyField(Genero, help_text='Selecione um gênero para o livro.')
+    genero = models.ManyToManyField(Genero, verbose_name='Gênero', help_text='Selecione um gênero para o livro.')
     
     def __str__(self):
         """Retorna uma string para representar o modelo"""
-        return self.title
+        return self.titulo
 
     def get_absolute_url(self):
         """Retorna um url para um acesso particular a instância livro"""
@@ -35,9 +35,9 @@ class LivroInstancia(models.Model):
     """Um modelo que representa uma cópia do livro em específico"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='ID exclusivo para este livro específico em toda a biblioteca')
     livro = models.ForeignKey('Livro', on_delete=models.SET_NULL, null=True)
-    edicao = models.CharField(max_length=200)
+    edicao = models.CharField('Edição', max_length=200)
     idioma = models.CharField(max_length=20, blank=True, default='Português')
-    devolucao = models.DateField(null=True, blank=True)
+    devolucao = models.DateField('Devolução', null=True, blank=True)
     
     LOAN_STATUS = (
         ('m', 'Em manutenção'),
@@ -68,7 +68,7 @@ class Autor(models.Model):
     """Um modelo que representa um autor"""
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
-    data_nascimento = models.DateField(null=True, blank=True)
+    data_nascimento = models.DateField('Data de nascimento', null=True, blank=True)
     data_morte = models.DateField('Morte', null=True, blank=True)
     
     class Meta:
