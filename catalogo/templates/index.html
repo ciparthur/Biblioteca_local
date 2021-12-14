@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Inicio</title>{% endblock %}
+
+{% block content %}
+    <h1>Página inicial da Biblioteca local</h1>
+    <p>Bem vindo ao site Biblioteca local, um site desenvolvido por <em>Arthur Gabriel Cipitelli</em>!</p>
+
+    <h2>Conteúdo dinamico</h2>
+    <p>A biblioteca possui as seguintes contagens de registros:</p>
+    <ul>
+        <li><strong>Livros: </strong>{{ num_livros }}</li>
+        <li><strong>Gêneros literários: </strong>{{ num_generos }}</li>
+        <li><strong>Cópias: </strong>{{ num_instancias }}</li>
+        <li><strong>Livros disponiveis: </strong>{{ num_instancias_disponiveis }}</li>
+        <li><strong>Autores: </strong>{{ num_autores }}</li>
+        <li><strong>Livros com a palavra Deus com D maiúsculo no sumário: </strong>{{ num_livros_palavras }}</li>
+    </ul>
+{% endblock %}
