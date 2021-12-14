@@ -30,6 +30,12 @@ class Livro(models.Model):
         """Retorna um url para um acesso particular a instância livro"""
         return reverse("livro-detail", args=[str(self.id)])
 
+    def display_genero(self):
+        """Cria uma string para o gênero. Isso é necessário para o dislay genero no site Admin"""
+        return ', '.join(genero.nome for genero in self.genero.all()[:3])
+    
+    display_genero.short_description = 'Gênero'
+
 
 class LivroInstancia(models.Model):
     """Um modelo que representa uma cópia do livro em específico"""
