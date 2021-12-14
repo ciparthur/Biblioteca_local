@@ -33,6 +33,7 @@ class LivroInstancia(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='ID exclusivo para este livro específico em toda a biblioteca')
     livro = models.ForeignKey('Livro', on_delete=models.SET_NULL, null=True)
     edicao = models.CharField(max_length=200)
+    idioma = models.CharField(max_length=20, blank=True, default='Português')
     devolucao = models.DateField(null=True, blank=True)
     
     LOAN_STATUS = (
