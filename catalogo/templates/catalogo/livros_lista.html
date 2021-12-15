@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Livros</title>{% endblock %}
+
+{% block content %}
+    <h1>Livros</h1>
+    {% if livros %}
+        <ul>
+            {% for livro in livros %}
+                <li>
+                    <a href="{% url 'livro-detalhes' livro.pk %}">{{ livro.titulo }}</a> ({{ livro.autor}})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há livros na biblioteca.</p>
+    {% endif %}
+{% endblock %}

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.views import generic
 
 from .models import Livro, LivroInstancia, Autor, Genero
 
@@ -29,3 +30,33 @@ def index(request):
 
     # Renderiza o template 'index.html' com dados na variável de contexto
     return render(request, 'index.html', contexto)
+
+#def livros(request):
+#    """Função view da página de livros"""
+#    livros = Livro.objects.all()
+#    contexto = {'livros': livros}
+    
+#    return render(request, 'catalogo/livros_lista.html', contexto)
+
+
+class LivrosListaView(generic.ListView):
+    model = Livro
+    context_object_name = 'livros'
+    template_name = 'catalogo/livros_lista.html'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return Livro.objects.order_by('titulo')
+
+
+def livro_detalhes(request, chave_pk):
+    """Função view da página de detalhes do livro"""
+    livro = get_object_or_404(Livro, pk=chave_pk)
+    contexto = {'livro': livro}
+    
+    return render(request, 'catalogo/livro_detalhes.html', contexto)
+
+#class LivroDetalhe(generic.DetailView):
+#    model = Livro
+#    context_object_name = 'livro'
+#    template_name = 'catalogo/livro_detalhe.html'

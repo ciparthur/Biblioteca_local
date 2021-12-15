@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - {{ livro.titulo }}</title>{% endblock %}
+
+{% block content %}
+    {% if livro %}
+        <h1>{{ livro.titulo }}</h1>
+        <p><strong>Autor:</strong> <a href="#">{{ livro.autor }}</a></p>
+        <p><strong>Sumário:</strong>{{ livro.sumario | linebreaks }}</p>
+        
+        <p>
+            <strong>Gênero(s):</strong>
+            {% for genero in livro.genero.all %}
+                {{ genero }},
+            {% endfor %}
+        </p>
+
+        <p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+    {% else %}
+        <p>Não há detalhes do livro selecionado</p>
+    {% endif %}
+
+    <div style="margin-left:20; margin-top:20px;">
+        <h2>Cópias</h2>
+
+        {% for copia in livro.livroinstancia_set.all %}
+            <hr>
+            <p class="{% if copia.status == 'd' %}text-success{% elif copia.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+                {{ copia.get_status_display }}
+            </p>
+
+            {% if copia.status != 'd' %}
+                <p><strong>Dia da devolução: </strong>{{ copia.devolucao }}</p>
+            {% endif %}
+            
+            <p><strong>Edição: </strong>{{ copia.edicao }}</p>
+            <p class="text-mutted"><strong>ID: </strong>{{ copia.id }}</p>
+        {% empty %}
+            <p>Não possuímos cópia desse livro.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
