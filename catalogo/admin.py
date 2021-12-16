@@ -15,7 +15,7 @@ class LivroInline(admin.StackedInline):
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
     list_display = ('sobrenome', 'nome', 'data_nascimento', 'data_morte')
-    fields = ['sobrenome', 'nome', ('data_nascimento', 'data_morte')]
+    fields = ['sobrenome', 'preposicao', 'nome', ('data_nascimento', 'data_morte')]
     
     inlines = [LivroInline]
 

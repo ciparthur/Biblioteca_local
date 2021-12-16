@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - {{ autor.nome}} {% if autor.preposicao %}{{autor.preposicao}}{% endif %} {{ autor.sobrenome }}</title>{% endblock %}
+
+{% block content %}
+    <h1>Autor:
+        {{ autor.nome }}
+
+        {% if autor.preposicao %}
+            {{ autor.preposicao }}
+        {% endif %}
+
+        {{ autor.sobrenome }}
+    </h1>
+    <p>{{ autor.data_nascimento }}</p>
+
+    
+{% endblock %}
