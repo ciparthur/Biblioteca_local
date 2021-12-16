@@ -35,14 +35,16 @@ def index(request):
 
 def livros(request):
     """Função view da página de livros"""
-    livros = Livro.objects.all()
+    try:
+        livros = Livro.objects.all().order_by('titulo')
+        contexto = {'livros': livros}
+    except Livro.DoesNotExist:
+        raise Http404('Página não encontrada :(')
     
     # paginator = Paginator(livros, 10)
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
-    
-    contexto = {'livros': livros}
-    
+        
     return render(request, 'catalogo/livros_lista.html', contexto)
 
 #class LivrosListaView(generic.ListView):
