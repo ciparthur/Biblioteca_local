@@ -74,7 +74,7 @@ class Autor(models.Model):
     """Um modelo que representa um autor"""
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
-    preposicao = models.CharField(max_length=5, null=True, blank=True)
+    preposicao = models.CharField('Preposição', max_length=5, null=True, blank=True)
     data_nascimento = models.DateField('Data de nascimento', null=True, blank=True)
     data_morte = models.DateField('Morte', null=True, blank=True)
     

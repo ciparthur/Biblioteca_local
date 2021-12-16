@@ -14,5 +14,16 @@
     </h1>
     <p>{{ autor.data_nascimento }}</p>
 
-    
+    <h2>Livros</h2>
+    <hr>
+    {% if autor.livro_set %}
+        {% for livro in autor.livro_set.all %}
+            <p>
+                <a href="{% url 'livro-detalhes' livro.pk %}">{{ livro.titulo }}</a>
+                {{ livro.sumario | linebreaks}}
+            </p>
+        {% endfor %}
+    {% else %}
+        <p>Não há livros desse autor na biblioteca :(</p>
+    {% endif %}
 {% endblock %}
