@@ -16,4 +16,6 @@
         <li><strong>Autores: </strong>{{ num_autores }}</li>
         <li><strong>Livros com a palavra Deus com D maiúsculo no sumário: </strong>{{ num_livros_palavras }}</li>
     </ul>
+    
+    <p>Você visitou essa página {{ num_visitas }} {% if num_visitas == 1%}vez{% else %}vezes{% endif %}</p>
 {% endblock %}

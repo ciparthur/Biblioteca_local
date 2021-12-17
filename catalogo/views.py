@@ -16,10 +16,15 @@ def index(request):
     # Gera contagem de quantos livros estão disponiveis
     num_instancias_disponiveis = LivroInstancia.objects.filter(status__exact='d').count()
     
+    # Gera contagem de quantas vezes a palavra Deus apareceu em algum sumário dos livros
     num_livros_palavras = Livro.objects.filter(sumario__contains='Deus').count()
     
     # Gera contagem de autores
     num_autores = Autor.objects.count()
+    
+    # Gera a contagem de visitantes anônimos no site
+    num_visitas = request.session.get('num_visitas', 0)
+    request.session['num_visitas'] = num_visitas + 1
     
     contexto = {
         'num_livros': num_livros,
@@ -28,6 +33,7 @@ def index(request):
         'num_instancias_disponiveis': num_instancias_disponiveis,
         'num_autores': num_autores,
         'num_livros_palavras': num_livros_palavras,
+        'num_visitas': num_visitas,
     }
 
     # Renderiza o template 'index.html' com dados na variável de contexto
