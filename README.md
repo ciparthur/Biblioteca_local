@@ -1,6 +1,6 @@
 # Biblioteca local
 
-Um site de uma biblioteca.
+Site de uma biblioteca.
 
 _Mais conteúdo em breve._
 
