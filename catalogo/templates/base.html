@@ -25,12 +25,18 @@
                             <li><a href="{% url 'index' %}">Inicio</a></li>
                             <li><a href="{% url 'livros' %}">Todos os livros</a></li>
                             <li><a href="{% url 'autores' %}">Todos os autores</a></li>
+                            <br>
                             {% if user.is_authenticated %}
-                                <li>User: {{ user.get_username }}</li>
+                                <li>Usuário: {{ user.get_username }}</li>
                                 <li><a href="{% url 'livros-emprestados' %}">Meus livros</a></li>
                                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Sair</a></li>
                             {% else %}
                                 <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+                            {% endif %}
+                            {% if user.is_staff %}
+                                <br>
+                                <hr>
+                                <li><a href="{% url 'mutuarios' %}">Mutuários</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}

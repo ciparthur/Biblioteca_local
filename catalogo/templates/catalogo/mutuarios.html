@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Mutuários</title>{% endblock %}
+
+{% block content %}
+    <h1>Todos os mutuários</h1>
+
+    {% if mutuarios %}
+        {% for mutuario in mutuarios %}
+            <ul>
+                <li class="{% if mutuario.esta_atrasado %}text-danger{% endif %}">
+                    <a href="{% url 'livro-detalhes' mutuario.livro.pk %}">{{ mutuario.livro.titulo }}</a> ({{ mutuario.devolucao }}) - {{ mutuario.mutuario.first_name }} {{ mutuario.mutuario.last_name }}
+                </li>
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

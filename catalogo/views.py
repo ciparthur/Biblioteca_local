@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.views import generic
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.admin.views.decorators import staff_member_required
 # from django.core.paginator import Paginator
 
 from .models import Livro, LivroInstancia, Autor, Genero
@@ -102,3 +103,18 @@ def livros_emprestados(request):
         raise Http404('Página não encontrada :(')
     
     return render(request, 'catalogo/livros_emprestados.html', contexto)
+
+@login_required
+@staff_member_required
+@permission_required('catalogo.can_mark_returned')
+def mutuarios(request):
+    """Função view para obter todos os mutuários para os funcionários"""
+    try:
+        mutuarios = LivroInstancia.objects.all().filter(status__exact='e').order_by('devolucao')
+        
+        contexto = {'mutuarios': mutuarios}
+    
+    except LivroInstancia.DoesNotExist:
+        raise Http404('Página não encontrada :(')
+
+    return render(request, 'catalogo/mutuarios.html', contexto)

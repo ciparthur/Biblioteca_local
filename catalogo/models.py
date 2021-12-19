@@ -66,6 +66,7 @@ class LivroInstancia(models.Model):
     class Meta:
         ordering = ['devolucao']
         verbose_name_plural = 'Instâncias de livros'
+        permissions = (('can_mark_returned', 'Defina o livro como devolvido'),)
 
     
     @property
