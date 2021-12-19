@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 # from django.core.paginator import Paginator
 
 from .models import Livro, LivroInstancia, Autor, Genero
@@ -79,12 +80,25 @@ def autores(request):
 
     return render(request, 'catalogo/autores.html', contexto)
 
+@login_required
 def autor_detalhes(request, autor_pk):
     """Função view para a página de detalhes sobre um autor especifico"""
     try:
         autor = Autor.objects.get(pk=autor_pk)
         contexto = {'autor': autor}
     except Autor.DoesNotExist:
-        raise Http404('Págnina não encontrada :(')
+        raise Http404('Página não encontrada :(')
 
     return render(request, 'catalogo/autor.html', contexto)
+
+@login_required
+def livros_emprestados(request):
+    """Função view para obter uma lista de livros emprestados"""
+    try:
+        emprestados = LivroInstancia.objects.all().filter(mutuario=request.user).filter(status__exact='e').order_by('devolucao')
+        
+        contexto = {'emprestados': emprestados}
+    except LivroInstancia.DoesNotExist:
+        raise Http404('Página não encontrada :(')
+    
+    return render(request, 'catalogo/livros_emprestados.html', contexto)

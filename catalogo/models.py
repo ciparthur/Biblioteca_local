@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from datetime import date
 import uuid
 
 class Genero(models.Model):
@@ -44,6 +46,7 @@ class LivroInstancia(models.Model):
     edicao = models.CharField('Edição', max_length=200)
     idioma = models.CharField(max_length=20, blank=True, default='Português')
     devolucao = models.DateField('Devolução', null=True, blank=True)
+    mutuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     
     LOAN_STATUS = (
         ('m', 'Em manutenção'),
@@ -65,6 +68,13 @@ class LivroInstancia(models.Model):
         verbose_name_plural = 'Instâncias de livros'
 
     
+    @property
+    def esta_atrasado(self):
+        if self.devolucao and date.today() > self.devolucao:
+            return True
+        
+        return False
+
     def __str__(self):
         """Retorna um string para representar o modelo"""
         return f'{self.id} {self.livro.titulo}'

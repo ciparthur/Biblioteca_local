@@ -34,7 +34,7 @@ class LivroAdmin(admin.ModelAdmin):
 
 @admin.register(LivroInstancia)
 class LivroInstancia(admin.ModelAdmin):
-    list_display = ('livro', 'status', 'devolucao')
+    list_display = ('livro', 'status', 'devolucao', 'mutuario')
     list_filter = ('status', 'devolucao')
     fieldsets = (
         (None, {
@@ -42,6 +42,6 @@ class LivroInstancia(admin.ModelAdmin):
         }),
         
         ('Disponibilidade', {
-            'fields': ('status', 'devolucao')
+            'fields': ('status', 'devolucao', 'mutuario')
         }),
     )

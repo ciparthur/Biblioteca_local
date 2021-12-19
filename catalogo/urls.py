@@ -8,6 +8,7 @@ urlpatterns = [
     path('livros/<int:chave_pk>', views.livro_detalhes, name='livro-detalhes'),
     path('autores/', views.autores, name='autores'),
     path('autores/<int:autor_pk>', views.autor_detalhes, name='autor-detalhes'),
+    path('meus_livros', views.livros_emprestados, name='livros-emprestados'),
     
     #path('livros/', views.LivrosListaView.as_view(), name='livros'),
     #path('livros/<int:pk>', views.LivroDetalhe.as_view(), name='livro-detalhes'),

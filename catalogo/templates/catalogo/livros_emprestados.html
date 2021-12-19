@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Mutuário</title>{% endblock %}
+
+{% block content %}
+    <h1>Livros emprestados</h1>
+
+    {% if emprestados %}
+        <ul>
+            {% for livroinst in emprestados %}
+                <li class="{% if livroinst.esta_atrasado %}text-danger{% endif %}">
+                    <a href="{% url 'livro-detalhes' livroinst.livro.pk %}">{{ livroinst.livro.titulo }}</a> ({{ livroinst.devolucao }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há livros no mutuário</p>
+    {% endif %}
+{% endblock %}
