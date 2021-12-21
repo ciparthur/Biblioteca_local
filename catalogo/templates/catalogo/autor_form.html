@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Adicionar novo autor</title>{% endblock %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ formulario.as_table }}
+        </table>
+        <input type="submit" value="Adicionar">
+    </form>
+{% endblock %}

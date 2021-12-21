@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca loca - Renovação da data de devolução</title>{% endblock %}
+
+{% block content %}
+    <h1>Renovar: {{ livro_instancia.livro.titulo }}</h1>
+    <p>Mutuário: {{ livro_instancia.mutuario }}</p>
+    <p class="{% if livro_instancia.is_esta_atrasado %}text-danger{% endif %}">
+        Devolução: {{ livro_instancia.devolucao}}
+    </p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ formulario.as_table }}
+        </table>
+        <input type="submit" value="Confirmar">
+    </form>
+{% endblock %}

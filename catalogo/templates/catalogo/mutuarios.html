@@ -9,7 +9,7 @@
         {% for mutuario in mutuarios %}
             <ul>
                 <li class="{% if mutuario.esta_atrasado %}text-danger{% endif %}">
-                    <a href="{% url 'livro-detalhes' mutuario.livro.pk %}">{{ mutuario.livro.titulo }}</a> ({{ mutuario.devolucao }}) - {{ mutuario.mutuario.first_name }} {{ mutuario.mutuario.last_name }}
+                    <a href="{% url 'livro-detalhes' mutuario.livro.pk %}">{{ mutuario.livro.titulo }}</a> ({{ mutuario.devolucao }}) - {{ mutuario.mutuario.first_name }} {{ mutuario.mutuario.last_name }} - {% if perms.catalogo.can_mark_returned %}<a href="{% url 'renovacao-livro' mutuario.id %}">Renovação</a>{% endif %}
                 </li>
             </ul>
         {% endfor %}
