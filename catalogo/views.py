@@ -9,7 +9,7 @@ from django.urls import reverse
 # from django.core.paginator import Paginator
 
 from .models import Livro, LivroInstancia, Autor, Genero
-from .forms import RenovacaoLivroFormulario, CriarAutor
+from .forms import RenovacaoLivroFormulario, CriarAutor, AtualizarAutor
 
 def index(request):
     """Função view do página index do site"""
@@ -194,6 +194,14 @@ def alterar_autor(request, alterar_pk):
             autor.save()
             
             return HttpResponseRedirect(reverse('autores'))
+
+    else:
+        formulario = AtualizarAutor()
+    
+    contexto = {'formulario': formulario, 'autor': autor}
+    
+    return render(request, 'catalogo/alterar_autor.html', contexto)
+        
 
 def deletar_autor(request, deletar_pk):
     autor = Autor.objects.get(pk=deletar_pk)

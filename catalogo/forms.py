@@ -79,4 +79,34 @@ class CriarAutor(forms.Form):
 
 
 class AtualizarAutor(forms.Form):
-    pass
+    """Formulário para alteração do cadastro de autores existentes no banco de dados"""
+    nome = forms.CharField(max_length=100)
+    sobrenome = forms.CharField(max_length=100)
+    preposicao = forms.CharField(max_length=5, label='Preposição', required=False)
+    data_nascimento = forms.DateField(label='Data de nascimento')
+    data_morte = forms.DateField(label='Morte', required=False)
+
+    def clean_nome(self):
+        data = self.cleaned_data['nome']
+        
+        return data
+    
+    def clean_sobrenome(self):
+        data = self.cleaned_data['sobrenome']
+        
+        return data
+    
+    def clean_preposicao(self):
+        data = self.cleaned_data['preposicao']
+        
+        return data
+    
+    def clean_data_nascimento(self):
+        data = self.cleaned_data['data_nascimento']
+        
+        return data
+    
+    def clean_data_morte(self):
+        data = self.cleaned_data['data_morte']
+        
+        return data
