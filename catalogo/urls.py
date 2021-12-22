@@ -11,5 +11,7 @@ urlpatterns = [
     path('meus_livros', views.livros_emprestados, name='livros-emprestados'),
     path('mutuarios/', views.mutuarios, name='mutuarios'),
     path('livro/<uuid:renovacao_pk>/renovacao/', views.renovacao_livro, name='renovacao-livro'),
-    path('autor/criar/', views.criar_autor, name='criar-autor'),
+    path('autores/criar/', views.criar_autor, name='criar-autor'),
+    path('autores/<int:alterar_pk>/alterar', views.alterar_autor, name='alterar-autor'),
+    path('autores/<int:deletar_pk>/deletar', views.deletar_autor, name='deletar-autor'),
 ]

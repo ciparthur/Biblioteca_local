@@ -151,6 +151,8 @@ def renovacao_livro(request, renovacao_pk):
     
     return render(request, 'catalogo/renovacao_livro.html', contexto)
 
+@login_required
+@staff_member_required
 def criar_autor(request):
     criar_autor = Autor.objects.all()
     
@@ -158,15 +160,44 @@ def criar_autor(request):
         formulario = CriarAutor(request.POST)
         
         if formulario.is_valid():
+            criar_autor = Autor.objects.create()
+            
             criar_autor.nome = formulario.cleaned_data['nome']
             criar_autor.sobrenome = formulario.cleaned_data['sobrenome']
             criar_autor.preposicao = formulario.cleaned_data['preposicao']
             criar_autor.data_nascimento = formulario.cleaned_data['data_nascimento']
             criar_autor.data_morte = formulario.cleaned_data['data_morte']
+            
             criar_autor.save()
+            
+            return HttpResponseRedirect(reverse('autores'))
     else:
         formulario = CriarAutor()
         
     contexto = {'formulario': formulario, 'criar_autor': criar_autor}
     
     return render(request, 'catalogo/autor_form.html', contexto)
+
+def alterar_autor(request, alterar_pk):
+    autor = Autor.objects.get(pk=alterar_pk)
+    
+    if request.method == 'POST':
+        formulario = AtualizarAutor(request.POST)
+        
+        if formulario.is_valid():
+            autor.nome = formulario.cleaned_data['nome']
+            autor.sobrenome = formulario.cleaned_data['sobrenome']
+            autor.preposicao = formulario.cleaned_data['preposicao']
+            autor.data_nascimento = formulario.cleaned_data['data_nascimento']
+            autor.data_morte = formulario.cleaned_data['data_morte']
+            
+            autor.save()
+            
+            return HttpResponseRedirect(reverse('autores'))
+
+def deletar_autor(request, deletar_pk):
+    autor = Autor.objects.get(pk=deletar_pk)
+    
+    autor.delete()
+    
+    return HttpResponseRedirect(reverse('autores'))

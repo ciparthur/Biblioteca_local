@@ -49,7 +49,7 @@ class CriarAutor(forms.Form):
     nome = forms.CharField(max_length=100)
     sobrenome = forms.CharField(max_length=100)
     preposicao = forms.CharField(label='Preposição', max_length=5, required=False)
-    data_nascimento = forms.DateField(label='Data de nascimento', required=False)
+    data_nascimento = forms.DateField(label='Data de nascimento')
     data_morte = forms.DateField(label='Morte', required=False)
     
     def clean_nome(self):
@@ -79,8 +79,4 @@ class CriarAutor(forms.Form):
 
 
 class AtualizarAutor(forms.Form):
-    pass
-
-
-class DeletarAutor(forms.Form):
     pass
