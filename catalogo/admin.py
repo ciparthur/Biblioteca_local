@@ -13,8 +13,8 @@ class LivroInline(admin.StackedInline):
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
     list_display = ('sobrenome', 'nome', 'data_nascimento', 'data_morte')
-    fields = ['sobrenome', 'preposicao', 'nome', ('data_nascimento', 'data_morte')]
-    
+    fields = ['sobrenome', 'preposicao', 'nome', 'nome_meio', 'apelido', ('data_nascimento', 'data_morte')]
+
     inlines = [LivroInline]
 
 
@@ -22,11 +22,11 @@ class LivroInstanciaInline(admin.StackedInline):
     model = LivroInstancia
     extra = 0
 
-    
+
 @admin.register(Livro)
 class LivroAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'autor', 'display_genero')
-    
+
     inlines = [LivroInstanciaInline]
 
 

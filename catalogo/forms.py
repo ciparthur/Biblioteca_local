@@ -110,3 +110,11 @@ class AtualizarAutor(forms.Form):
         data = self.cleaned_data['data_morte']
         
         return data
+
+
+class AdicionarLivro(forms.Form):
+    pass
+
+
+class EditarLivro(forms.Form):
+    pass

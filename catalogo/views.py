@@ -72,7 +72,7 @@ def livro_detalhes(request, chave_pk):
     """Função view da página de detalhes do livro"""
     livro = get_object_or_404(Livro, pk=chave_pk)
     contexto = {'livro': livro}
-    
+
     return render(request, 'catalogo/livro_detalhes.html', contexto)
 
 def autores(request):
@@ -101,11 +101,11 @@ def livros_emprestados(request):
     """Função view para obter uma lista de livros emprestados"""
     try:
         emprestados = LivroInstancia.objects.all().filter(mutuario=request.user).filter(status__exact='e').order_by('devolucao')
-        
+
         contexto = {'emprestados': emprestados}
     except LivroInstancia.DoesNotExist:
         raise Http404('Página não encontrada :(')
-    
+
     return render(request, 'catalogo/livros_emprestados.html', contexto)
 
 @login_required
@@ -115,9 +115,9 @@ def mutuarios(request):
     """Função view para obter todos os mutuários para os funcionários"""
     try:
         mutuarios = LivroInstancia.objects.all().filter(status__exact='e').order_by('devolucao')
-        
+
         contexto = {'mutuarios': mutuarios}
-    
+
     except LivroInstancia.DoesNotExist:
         raise Http404('Página não encontrada :(')
 
@@ -128,12 +128,12 @@ def mutuarios(request):
 def renovacao_livro(request, renovacao_pk):
     """Função view para a criação da página de renovação dos livros emprestados"""
     livro_instancia = get_object_or_404(LivroInstancia, pk=renovacao_pk)
-    
+
     # Se a requisição for POST, então processe os dados do formulário
     if request.method == 'POST':
         # Cria uma instância de formulário e preenche com os dados da requisição (Vinculação)
         formulario = RenovacaoLivroFormulario(request.POST)
-        
+
         # Verifica se o formulário é válido
         if formulario.is_valid():
             # Processa os dados de 'formulario.cleaned_data conforme for necessário (Aqui apenas gravamos no campo devolução do modelo)
@@ -146,69 +146,73 @@ def renovacao_livro(request, renovacao_pk):
     else:
         proposta = datetime.date.today() + datetime.timedelta(weeks=3)
         formulario = RenovacaoLivroFormulario(initial={'data_renovacao': proposta})
-        
+
     contexto = {'formulario': formulario, 'livro_instancia': livro_instancia}
-    
+
     return render(request, 'catalogo/renovacao_livro.html', contexto)
 
 @login_required
 @staff_member_required
 def criar_autor(request):
     criar_autor = Autor.objects.all()
-    
+
     if request.method == 'POST':
         formulario = CriarAutor(request.POST)
-        
+
         if formulario.is_valid():
             criar_autor = Autor.objects.create()
-            
+
             criar_autor.nome = formulario.cleaned_data['nome']
             criar_autor.sobrenome = formulario.cleaned_data['sobrenome']
             criar_autor.preposicao = formulario.cleaned_data['preposicao']
             criar_autor.data_nascimento = formulario.cleaned_data['data_nascimento']
             criar_autor.data_morte = formulario.cleaned_data['data_morte']
-            
+
             criar_autor.save()
-            
+
             return HttpResponseRedirect(reverse('autores'))
     else:
         formulario = CriarAutor()
-        
+
     contexto = {'formulario': formulario, 'criar_autor': criar_autor}
-    
+
     return render(request, 'catalogo/autor_form.html', contexto)
 
 @login_required
 @staff_member_required
 def alterar_autor(request, alterar_pk):
     autor = Autor.objects.get(pk=alterar_pk)
-    
+
     if request.method == 'POST':
         formulario = AtualizarAutor(request.POST)
-        
+
         if formulario.is_valid():
             autor.nome = formulario.cleaned_data['nome']
             autor.sobrenome = formulario.cleaned_data['sobrenome']
             autor.preposicao = formulario.cleaned_data['preposicao']
             autor.data_nascimento = formulario.cleaned_data['data_nascimento']
             autor.data_morte = formulario.cleaned_data['data_morte']
-            
+
             autor.save()
-            
+
             return HttpResponseRedirect(reverse('autores'))
 
     else:
         formulario = AtualizarAutor()
-    
+
     contexto = {'formulario': formulario, 'autor': autor}
-    
+
     return render(request, 'catalogo/alterar_autor.html', contexto)
 
 @login_required
 @staff_member_required
 def deletar_autor(request, deletar_pk):
     autor = Autor.objects.get(pk=deletar_pk)
-    
-    autor.delete()
-    
-    return HttpResponseRedirect(reverse('autores'))
+
+    if request.method == 'POST':
+        autor.delete()
+
+        return HttpResponseRedirect(reverse('autores'))
+
+    contexto = {'autor': autor}    
+    return render(request, 'catalogo/autor_confirm_delete.html', contexto)
