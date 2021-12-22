@@ -13,25 +13,25 @@ from .forms import RenovacaoLivroFormulario, CriarAutor, AtualizarAutor
 
 def index(request):
     """Função view do página index do site"""
-    
+
     # Gera contagem de livros e instâncias de livros
     num_livros = Livro.objects.all().count()
     num_instancias = LivroInstancia.objects.all().count()
     num_generos = Genero.objects.all().count()
-    
+
     # Gera contagem de quantos livros estão disponiveis
     num_instancias_disponiveis = LivroInstancia.objects.filter(status__exact='d').count()
-    
+
     # Gera contagem de quantas vezes a palavra Deus apareceu em algum sumário dos livros
     num_livros_palavras = Livro.objects.filter(sumario__contains='Deus').count()
-    
+
     # Gera contagem de autores
     num_autores = Autor.objects.count()
-    
+
     # Gera a contagem de visitantes anônimos no site
     num_visitas = request.session.get('num_visitas', 0)
     request.session['num_visitas'] = num_visitas + 1
-    
+
     contexto = {
         'num_livros': num_livros,
         'num_generos': num_generos,
@@ -52,11 +52,11 @@ def livros(request):
         contexto = {'livros': livros}
     except Livro.DoesNotExist:
         raise Http404('Página não encontrada :(')
-    
+
     # paginator = Paginator(livros, 10)
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
-        
+
     return render(request, 'catalogo/livros_lista.html', contexto)
 
 #class LivrosListaView(generic.ListView):
@@ -178,6 +178,8 @@ def criar_autor(request):
     
     return render(request, 'catalogo/autor_form.html', contexto)
 
+@login_required
+@staff_member_required
 def alterar_autor(request, alterar_pk):
     autor = Autor.objects.get(pk=alterar_pk)
     
@@ -201,8 +203,9 @@ def alterar_autor(request, alterar_pk):
     contexto = {'formulario': formulario, 'autor': autor}
     
     return render(request, 'catalogo/alterar_autor.html', contexto)
-        
 
+@login_required
+@staff_member_required
 def deletar_autor(request, deletar_pk):
     autor = Autor.objects.get(pk=deletar_pk)
     

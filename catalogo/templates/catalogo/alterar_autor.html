@@ -3,7 +3,7 @@
 {% block title %}<title>Biblioteca local - Alterar autor</title>{% endblock %}
 
 {% block content %}
-    <h1>Alteração do registro do autor: {{autor.nome}}{% if autor.preposicao %}{{autor.preposicao}}{% endif %}{{autor.sobrenome}}</h1>
+    <h1>Alteração do registro do autor: {{autor.nome}}{% if autor.preposicao %}{{autor.preposicao}}{% endif %} {{autor.sobrenome}}</h1>
 
     <form action="" method="POST">
         {% csrf_token %}

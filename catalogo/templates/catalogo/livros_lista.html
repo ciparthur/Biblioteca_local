@@ -15,10 +15,12 @@
     {% else %}
         <p>Não há livros na biblioteca.</p>
     {% endif %}
-
-    <br>
-    <hr>
-    <p>
-        <a href="#">Adicionar livros</a>
-    </p>
+    
+    {% if user.is_staff %}
+        <br>
+        <hr>
+        <p>
+            <a href="#">Adicionar livros</a>
+        </p>
+    {% endif %}
 {% endblock %}
