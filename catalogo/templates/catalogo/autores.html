@@ -22,13 +22,13 @@
                 </li>
             {% endfor %}
         </ul>
-
-        {% if user.is_staff %}
-            <br>
-            <hr>
-            <p><a href="{% url 'criar-autor' %}">Adicionar novo autor</a></p>
-        {% endif %}
     {% else %}
         <p>Lista de autores não encontrada :(</p>
+    {% endif %}
+
+    {% if user.is_staff %}
+        <br>
+        <hr>
+        <p><a href="{% url 'criar-autor' %}">Adicionar novo autor</a></p>
     {% endif %}
 {% endblock %}
