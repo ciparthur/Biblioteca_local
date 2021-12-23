@@ -4,6 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from .models import Genero, Autor
 
 #class RenovacaoLivroModeloFormulario(forms.ModelForm):
 #    def clean_devolucao(self):
@@ -113,7 +114,36 @@ class AtualizarAutor(forms.Form):
 
 
 class AdicionarLivro(forms.Form):
-    pass
+    titulo = forms.CharField(max_length=200)
+    autor = forms.ChoiceField()
+    sumario = forms.JSONField(label='Sumário')
+    isbn = forms.CharField(label='ISBN', max_length=13)
+    genero = forms.ChoiceField(label='Gênero')
+    
+    def clean_data_titulo(self):
+        data = self.cleaned_data['titulo']
+        
+        return data
+    
+    def clean_data_autor(self):
+        data = self.cleaned_data['autor']
+        
+        return data
+    
+    def clean_data_sumario(self):
+        data = self.cleaned_data['sumario']
+        
+        return data
+    
+    def clean_data_isbn(self):
+        data = self.cleaned_data['isbn']
+        
+        return data
+    
+    def clean_data_genero(self):
+        data = self.cleaned_data['genero']
+        
+        return data
 
 
 class EditarLivro(forms.Form):

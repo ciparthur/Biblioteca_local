@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Biblioteca local - Deletar livro</title>{% endblock %}
+
+{% block content %}
+    <h1>Deletar livro</h1>
+
+    <p>Você realmente quer deletar o livro {{ livro.titulo }}?</p>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Sim, deletar livro">
+    </form>
+{% endblock %}

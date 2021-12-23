@@ -14,4 +14,6 @@ urlpatterns = [
     path('autores/criar/', views.criar_autor, name='criar-autor'),
     path('autores/<int:alterar_pk>/alterar', views.alterar_autor, name='alterar-autor'),
     path('autores/<int:deletar_pk>/deletar', views.deletar_autor, name='deletar-autor'),
+    path('livros/adicionar', views.adicionar_livro, name='adicionar-livro'),
+    path('livros/<int:deletar_pk>/deletar', views.deletar_livro, name='deletar-livro'),
 ]

@@ -24,7 +24,7 @@
     <br>
     <p>
         <a href="#">Editar livro</a> -
-        <a href="#">Deletar livro</a>
+        <a href="{% url 'deletar-livro' livro.pk %}">Deletar livro</a>
     </p>
     {% endif %}
     

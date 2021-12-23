@@ -9,7 +9,7 @@ from django.urls import reverse
 # from django.core.paginator import Paginator
 
 from .models import Livro, LivroInstancia, Autor, Genero
-from .forms import RenovacaoLivroFormulario, CriarAutor, AtualizarAutor
+from .forms import RenovacaoLivroFormulario, CriarAutor, AtualizarAutor, AdicionarLivro
 
 def index(request):
     """Função view do página index do site"""
@@ -216,3 +216,43 @@ def deletar_autor(request, deletar_pk):
 
     contexto = {'autor': autor}    
     return render(request, 'catalogo/autor_confirm_delete.html', contexto)
+
+@login_required
+@staff_member_required
+def adicionar_livro(request):
+    add_livro = Livro.objects.all()
+    
+    if request.method == 'POST':
+        formulario = AdicionarLivro(request.POST)
+
+        if formulario.is_valid():
+            add_livro = Livro.objects.create()
+            
+            add_livro.titulo = formulario.cleaned_data['titulo']
+            add_livro.autor = formulario.cleaned_data['autor']
+            add_livro.sumario = formulario.cleaned_data['sumario']
+            add_livro.isbn = formulario.cleaned_data['isbn']
+            add_livro.genero = formulario.cleaned_data['genero']
+            
+            add_livro.save()
+            
+            return HttpResponseRedirect(reverse('livros'))
+    else:
+        formulario = AdicionarLivro()
+    
+    contexto = {'formulario': formulario, 'add_livro': add_livro}
+
+    return render(request, 'catalogo/add_livro.html', contexto)
+
+@login_required
+@staff_member_required
+def deletar_livro(request, deletar_pk):
+    livro = Livro.objects.get(pk=deletar_pk)
+    
+    if request.method == 'POST':
+        livro.delete()
+        
+        return HttpResponseRedirect(reverse('livros'))
+    
+    contexto = {'livro': livro}
+    return render(request, 'catalogo/deletar_livro.html', contexto)
