@@ -5,6 +5,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.views import generic
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 # from django.core.paginator import Paginator
 
@@ -261,3 +263,21 @@ def deletar_livro(request, deletar_pk):
     
     contexto = {'livro': livro}
     return render(request, 'catalogo/deletar_livro.html', contexto)
+
+def cadastro(request):
+    if request.method == 'POST':
+        formulario = UserCreationForm(request.POST)
+        
+        if formulario.is_valid():
+            novo_usuario = formulario.save()
+            
+            autenticacao = authenticate(username=novo_usuario.username, password=request.POST['password1'])
+            login(request, autenticacao)
+            
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        formulario = UserCreationForm()
+    
+    contexto = {'formulario': formulario}
+    
+    return render(request, 'registration/cadastro.html', contexto)
