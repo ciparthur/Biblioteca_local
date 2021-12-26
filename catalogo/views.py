@@ -232,10 +232,10 @@ def adicionar_livro(request):
             add_livro.autor = formulario.cleaned_data['autor']
             add_livro.sumario = formulario.cleaned_data['sumario']
             add_livro.isbn = formulario.cleaned_data['isbn']
-            add_livro.genero = formulario.cleaned_data['genero']
-            
+            add_livro.genero.nome = formulario.cleaned_data['genero']
+
             add_livro.save()
-            
+
             return HttpResponseRedirect(reverse('livros'))
     else:
         formulario = AdicionarLivro()
@@ -243,6 +243,11 @@ def adicionar_livro(request):
     contexto = {'formulario': formulario, 'add_livro': add_livro}
 
     return render(request, 'catalogo/add_livro.html', contexto)
+
+@login_required
+@staff_member_required
+def alterar_livro(request):
+    pass
 
 @login_required
 @staff_member_required

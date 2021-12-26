@@ -6,7 +6,7 @@ import uuid
 
 class Genero(models.Model):
     """Um modelo que representa o gênero do livro"""
-    nome = models.CharField(max_length=200, help_text='Entre com gênero do livro (ex: fantasia).')
+    nome = models.CharField(max_length=200, help_text='Entre com gênero do livro (ex: fantasia).', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Gênero'

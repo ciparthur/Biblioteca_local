@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .models import Genero, Autor
+from .models import Genero, Autor, Livro
 
 #class RenovacaoLivroModeloFormulario(forms.ModelForm):
 #    def clean_devolucao(self):
@@ -113,12 +113,17 @@ class AtualizarAutor(forms.Form):
         return data
 
 
-class AdicionarLivro(forms.Form):
-    titulo = forms.CharField(max_length=200)
-    autor = forms.ChoiceField()
-    sumario = forms.JSONField(label='Sumário')
-    isbn = forms.CharField(label='ISBN', max_length=13)
-    genero = forms.ChoiceField(label='Gênero')
+class AdicionarLivro(forms.ModelForm):
+    #autores = []
+    
+    #for autor in Autor.objects.all():
+        #autores += [(autor.id, autor.nome)]
+    
+    #titulo = forms.CharField(max_length=200)
+    #autor = forms.ChoiceField(choices=autores)
+    #sumario = forms.CharField(widget=forms.Textarea, label='Sumário')
+    #isbn = forms.CharField(label='ISBN', max_length=13)
+    # genero = forms.MultipleChoiceField(label='Gênero', choices=generos)
     
     def clean_data_titulo(self):
         data = self.cleaned_data['titulo']
@@ -146,5 +151,11 @@ class AdicionarLivro(forms.Form):
         return data
 
 
-class EditarLivro(forms.Form):
+    class Meta:
+        model = Livro
+        fields = ['titulo', 'autor', 'sumario', 'isbn', 'genero']
+        labels = {'sumario': _('Sumário'), 'isbn': _('ISBN')}
+
+
+class EditarLivro(forms.ModelForm):
     pass
