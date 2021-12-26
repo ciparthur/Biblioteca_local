@@ -8,9 +8,13 @@
     {% if emprestados %}
         <ul>
             {% for livroinst in emprestados %}
-                <li class="{% if livroinst.esta_atrasado %}text-danger{% endif %}">
-                    <a href="{% url 'livro-detalhes' livroinst.livro.pk %}">{{ livroinst.livro.titulo }}</a> ({{ livroinst.devolucao }})
-                </li>
+                {% if livroinst.livro.pk %}
+                    <li class="{% if livroinst.esta_atrasado %}text-danger{% endif %}">
+                        <a href="{% url 'livro-detalhes' livroinst.livro.pk %}">{{ livroinst.livro.titulo }}</a> ({{ livroinst.devolucao }})
+                    </li>
+                {% else %}
+                    <li>Livro não encontrado</li>
+                {% endif %}
             {% endfor %}
         </ul>
     {% else %}
