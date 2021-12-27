@@ -1,13 +1,5 @@
 # Biblioteca local
 
-Site de uma biblioteca.
+Site de uma biblioteca local.
 
 Link: _em breve_
-
-_Mais conteúdo em breve._
-
-<imagem>
-
-<imagem>
-
-<imagem>
