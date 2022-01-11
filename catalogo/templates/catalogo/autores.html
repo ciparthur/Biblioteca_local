@@ -29,6 +29,6 @@
     {% if user.is_staff %}
         <br>
         <hr>
-        <p><a href="{% url 'criar-autor' %}">Adicionar novo autor</a></p>
+        <a class="btn btn-success" href="{% url 'criar-autor' %}">Adicionar novo autor</a>
     {% endif %}
 {% endblock %}

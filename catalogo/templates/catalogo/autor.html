@@ -16,8 +16,8 @@
 
     {% if user.is_staff %}
         <p>
-            <a href="{% url 'alterar-autor' autor.pk %}">Alterar autor</a> - 
-            <a href="{% url 'deletar-autor' autor.pk %}">Deletar autor</a>
+            <a class="btn btn-warning" href="{% url 'alterar-autor' autor.pk %}">Alterar autor</a>
+            <a class="btn btn-danger" href="{% url 'deletar-autor' autor.pk %}">Deletar autor</a>
         </p>
     {% endif %}
 

@@ -21,31 +21,30 @@
             <div class="row">
                 <div class="col-sm-2">
                     {% block sidebar %}
+                        <br>
                         <ul class="sidebar-nav">
-                            <li><a href="{% url 'index' %}">Inicio</a></li>
-                            <li><a href="{% url 'livros' %}">Todos os livros</a></li>
-                            <li><a href="{% url 'autores' %}">Todos os autores</a></li>
+                            <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Inicio</a></li>
+                            <li class="nav-item"><a href="{% url 'livros' %}" class="nav-link">Todos os livros</a></li>
+                            <li class="nav-item"><a href="{% url 'autores' %}" class="nav-link">Todos os autores</a></li>
                             <br>
                             {% if user.is_authenticated %}
-                                <li>Usuário: {{ user.get_username }}</li>
-                                <li><a href="{% url 'livros-emprestados' %}">Meus livros</a></li>
-                                <li><a href="{% url 'logout' %}?next={{ request.path }}">Sair</a></li>
-                            {% else %}
-                                <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
-                                <li><a href="{% url 'cadastro' %}">Cadastro</a></li>
-                            {% endif %}
+                                <li class="nav-item"><a href="" class="nav-link">{{ user.get_username }}</a></li>
 
-                            {% if user.is_staff %}
-                                <br>
-                                <hr>
-                                <p>Área de membros da equipe</p>
-                                <li><a href="{% url 'mutuarios' %}">Mutuários</a></li>
+                                {% if user.is_staff %}
+                                    <li class="nav-item"><a href="{% url 'mutuarios' %}" class="nav-link">Mutuários</a></li>
+                                {% else %}
+                                    <li class="nav-item"><a href="{% url 'livros-emprestados' %}" class="nav-link">Meus livros</a></li>
+                                {% endif %}
+                                <li class="nav-item"><a href="{% url 'logout' %}?next={{ request.path }}" class="nav-link">Sair</a></li>
+                            {% else %}
+                                <li class="nav-item"><a href="{% url 'login' %}?next={{ request.path }}" class="nav-link">Login</a></li>
+                                <li class="nav-item"><a href="{% url 'cadastro' %}" class="nav-link">Cadastro</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}
                 </div>
 
-                <div class="col-sm-10">
+                <div class="col-md">
                     {% block content %}{% endblock %}
 
                     <!--{% block paginated %}
