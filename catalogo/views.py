@@ -15,6 +15,8 @@ from .forms import RenovacaoLivroFormulario, CriarAutor, AtualizarAutor, Adicion
 
 def index(request):
     """Função view do página index do site"""
+    
+    livros = Livro.objects.all().order_by('titulo')
 
     # Gera contagem de livros e instâncias de livros
     num_livros = Livro.objects.all().count()
@@ -42,6 +44,7 @@ def index(request):
         'num_autores': num_autores,
         'num_livros_palavras': num_livros_palavras,
         'num_visitas': num_visitas,
+        'livros': livros,
     }
 
     # Renderiza o template 'index.html' com dados na variável de contexto
